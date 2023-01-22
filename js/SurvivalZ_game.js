@@ -9,82 +9,64 @@
 
 /******************** Declare game specific global data and functions *****************/
 /* images must be declared as global, so that they will load before the game starts  */
-let backgroundImage = new Image();
-backgroundImage.src = "images/grass.png";
+let map = new Image();
+map.src = "images/map.png";
+let playerImage = new Image();
+playerImage.src = "images/man.png"
+let collisionImage = new Image();
+collisionImage = "images/Game_colision.png"
 
-let logImage = new Image();
-logImage.src = "images/log.png";
+let soundtruckZ = new Audio();
+soundtruckZ.src = "audio/SurvivalZ_Soundtrack.mp3";
 
-let fireballImage = new Image();
-fireballImage.src = "images/fireball.png";
+const UP = 0;
+const LEFT = 1;
+const DOWN = 2;
+const RIGHT = 3;
+const STOPPED = 4;
 
-const BACKGROUND = 0;
-const WIN_LOSE_MESSAGE = 1;
+const MAP = 0;
+const PLAYER = 1;
 
-/* Instead of using gameObject[], we can declare our own gameObject variables */
-let bat = null; // we cannot initialise gameObjects yet, as they might require images that have not yet loaded
-let target = null;
-
-let fireballs = [];
-let numberOfBulletsFired = 0; // no bullets fired yet
-/******************* END OF Declare game specific data and functions *****************/
-
-
-
-
-
-
-
-/* Always have a playGame() function                                     */
-/* However, the content of this function will be different for each game */
 function playGame()
 {
-    /* We need to initialise the game objects outside of the Game class */
-    /* This function does this initialisation.                          */
-    /* Specifically, this function will:                                */
-    /* 1. initialise the canvas and associated variables                */
-    /* 2. create the various game gameObjects,                   */
-    /* 3. store the gameObjects in an array                      */
-    /* 4. create a new Game to display the gameObjects           */
-    /* 5. start the Game                                                */
+    soundtruckZ.currentTime = 0;
+    soundtruckZ.play();
+    gameObjects[MAP] = new static_image(map, 100, 100, canvas.width+3000, canvas.height+3000);
+    gameObjects[PLAYER] = new Player(playerImage, canvas.width / 2, canvas.height / 2);
 
+      /* END OF game specific code. */
 
+  /* Always create a game that uses the gameObject array */
+  //let game = new SurvivalZCanvasGame(collisionImage);
 
-    /* Create the various gameObjects for this game. */
-    /* This is game specific code. It will be different for each game, as each game will have it own gameObjects */
+  let game = new CanvasGame();
 
-    gameObjects[BACKGROUND] = new StaticImage(backgroundImage, 0, 0, canvas.width, canvas.height);
-    bat = new Bat(0, canvas.height - 10, 125);
-    target = new Target(logImage, 100, 0, 100);
-    /* END OF game specific code. */
+  /* Always play the game */
+  game.start();
 
-
-    /* Always create a game that uses the gameObject array */
-    let game = new FireballCanvasGame();
-
-    /* Always play the game */
-    game.start();
-
-    
-    /* If they are needed, then include any game-specific mouse and keyboard listners */
-    document.addEventListener("keydown", function (e)
+  document.addEventListener("keydown", function (e)
     {
-        var stepSize = 10;
-
         if (e.keyCode === 37)  // left
         {
-            bat.changeX(-stepSize);
+            gameObjects[MAP].setDirection(RIGHT);
+            gameObjects[PLAYER].setDirection(LEFT);
+        }
+        else if (e.keyCode === 38) // up
+        {
+            gameObjects[MAP].setDirection(DOWN);
+            gameObjects[PLAYER].setDirection(UP);
         }
         else if (e.keyCode === 39) // right
         {
-            bat.changeX(stepSize);
+            gameObjects[MAP].setDirection(LEFT);
+            gameObjects[PLAYER].setDirection(RIGHT);
         }
-        else if (e.keyCode === 32) // space bar
+        else if (e.keyCode === 40) // down
         {
-            fireballs[numberOfBulletsFired] = new Fireball(fireballImage, bat.getCentreX());
-            fireballs[numberOfBulletsFired].start();
-            numberOfBulletsFired++;
-            bat.setWidth(bat.getWidth() + 10);
+            gameObjects[MAP].setDirection(UP);
+            gameObjects[PLAYER].setDirection(DOWN);
         }
     });
+
 }

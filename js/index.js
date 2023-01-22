@@ -25,9 +25,18 @@ let gameObjects = [];
 window.addEventListener("load", onAllAssetsLoaded);           // needed for websites
 document.addEventListener("deviceready", onAllAssetsLoaded);  // needed for Cordova mobile apps
 
+let game_is_loaded = false;
 document.write("<div id='loadingMessage'>Loading...</div>");
 function onAllAssetsLoaded()
 {
+    // Both "load" and "deviceready" will call this function.
+    // The game_is_loaded flag is used to make sure that this function will only be executed once 
+    if(game_is_loaded)
+    {
+        return;
+    }
+    game_is_loaded = true;
+
     /* hide the webpage loading message */
     document.getElementById('loadingMessage').style.visibility = "hidden";
 

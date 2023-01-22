@@ -1,6 +1,10 @@
 /* Author: Derek O Reilly, Dundalk Institute of Technology, Ireland. */
 /* style class for game's container, canvas and loading message      */
 
+body{
+    background-color: black;
+}
+
 #gameContainer
 {
     /* style the gameContainer if the game includes non-canvas elements */
