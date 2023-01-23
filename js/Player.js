@@ -97,4 +97,16 @@ class Player extends GameObject
     {
         return this.centreY;
     }
+    setCentreX(number){
+        this.number = number;
+        this.centreX = this.centreX-number;
+    }
+    setCentreY(number){
+        this.number = number;
+        this.centreY = this.centreY-number;
+    }
+    setStop(){
+        this.centreX=250;
+        this.centreY=250;
+    }
 }

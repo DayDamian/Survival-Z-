@@ -34,30 +34,32 @@ class static_image extends GameObject {
         {
             this.x += this.MAP_SPEED;
         }
+        
         if 
-        (this.x >= canvas.width/2)
+        (this.x >= 250)
         {
-            this.x = -3249;
+            this.x = -4228;
         }
         if 
-        (this.y >= canvas.height/2)
+        (this.y >= 250)
         {
-          this.y = -3249;
+          this.y = -2308;
         }
-        if (this.x <= ((-canvas.width/2)-3000))
+        if (this.x <= (-4229))
         {
             this.x = 249;
         }
-        if (this.y <= ((-canvas.width/2)-3000))
+        if (this.y <= (-2309))
         {
             this.y = 249;
         }
+        
 
   }
 
-
   render() {
     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
+    
     
     ctx.drawImage(this.image, this.x+this.width, this.y, this.width, this.height);
     ctx.drawImage(this.image, this.x-this.width, this.y, this.width, this.height);
@@ -81,5 +83,13 @@ class static_image extends GameObject {
     {
         return(this.direction);
     }
+    getX()
+    {
+        return this.x;
+    }
 
+    getY()
+    {
+        return this.y;
+    }
 }
