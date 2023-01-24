@@ -13,4 +13,7 @@ class Zombie extends Player
         this.centreX = 1000;
         this.centreY = 1000;
     }
+    updateState(){
+        //console.log("zombie!")
+    }
 }

@@ -49,43 +49,46 @@ class SurvivalZCanvasGame extends CanvasGame
         {  
             if(gameObjects[i].getStatus() === 0)
             {
-                console.log(i + " " +gameObjects[i].getCentreX() + " " + gameObjects[i].getCentreY());
                 // Running to center    
                 if (gameObjects[i].getCentreX() < 250)
                 {
+                    gameObjects[i].setDirection(3)
                     if (gameObjects[PLAYER].getDirection() === LEFT)
                     {
                         gameObjects[i].setCentreX(-1.5);
                     } else{
-                        gameObjects[i].setCentreX(-0.1);
+                        gameObjects[i].setCentreX(-1);
                     }
                 }
                 else if (gameObjects[i].getCentreX() > 250)
                 {
+                    gameObjects[i].setDirection(1)
                     if (gameObjects[PLAYER].getDirection() === RIGHT)
                     {
                         gameObjects[i].setCentreX(1.5);
                     } else{
-                        gameObjects[i].setCentreX(0.1);
+                        gameObjects[i].setCentreX(1);
                     }
                 }
 
                 if (gameObjects[i].getCentreY() < 250)
                 {
+                    gameObjects[i].setDirection(2)
                     if (gameObjects[PLAYER].getDirection() === UP)
                     {
                         gameObjects[i].setCentreY(-1.5);
                     } else{
-                        gameObjects[i].setCentreY(-0.1);
+                        gameObjects[i].setCentreY(-1);
                     }
                 }
                 else if (gameObjects[i].getCentreY() > 250)
                 {
+                    gameObjects[i].setDirection(0)
                     if (gameObjects[PLAYER].getDirection() === DOWN)
                     {
                         gameObjects[i].setCentreY(1.5);
                     } else{
-                        gameObjects[i].setCentreY(0.1);
+                        gameObjects[i].setCentreY(1);
                     }
                 }
 
@@ -99,71 +102,6 @@ class SurvivalZCanvasGame extends CanvasGame
                         gameObjects[i].setStatus(1);
                         //console.log("Zjedzony")
                     }
-                }
-                //Killing zombies
-                if (gameObjects[PLAYER].getDirection() === UP)
-                {
-                    //if(gameObjects[SHOT].getShot() === 1)
-                    //{
-                        console.log("Strzał")
-                        if (gameObjects[i].getCentreX() < 300 
-                        && gameObjects[i].getCentreX() > 200 
-                        && gameObjects[i].getCentreY() < 250 
-                        && gameObjects[i].getCentreY() > 0 )
-                        {
-                            gameObjects[i].setStatus(1);
-                            console.log("Trafienie")
-                        } 
-                    //}
-                    //gameObjects[SHOT].resetShot()
-                }
-                else if (gameObjects[PLAYER].getDirection() === LEFT)
-                {
-                    //if(gameObjects[SHOT].getShot() === 1)
-                    //{
-                        console.log("Strzał")
-                        if (gameObjects[i].getCentreX() < 250 
-                        && gameObjects[i].getCentreX() > 0 
-                        && gameObjects[i].getCentreY() < 300 
-                        && gameObjects[i].getCentreY() > 200 )
-                        {
-                            gameObjects[i].setStatus(1);
-                            console.log("Trafienie")
-                        } 
-                    //}
-                    //gameObjects[SHOT].resetShot()
-                }
-                else if (gameObjects[PLAYER].getDirection() === RIGHT)
-                {
-                    //if(gameObjects[SHOT].getShot() === 1)
-                    //{
-                        console.log("Strzał")
-                        if (gameObjects[i].getCentreX() < 500 
-                        && gameObjects[i].getCentreX() > 250 
-                        && gameObjects[i].getCentreY() < 300 
-                        && gameObjects[i].getCentreY() > 200 )
-                        {
-                            gameObjects[i].setStatus(1);
-                            console.log("Trafienie")
-                        }
-                    //}
-                    //gameObjects[SHOT].resetShot()
-                }
-                else if (gameObjects[PLAYER].getDirection() === DOWN)
-                {
-                    //if(gameObjects[SHOT].getShot() === 1)
-                    //{
-                        console.log("Strzał")
-                        if (gameObjects[i].getCentreX() < 300 
-                        && gameObjects[i].getCentreX() > 200
-                        && gameObjects[i].getCentreY() < 500 
-                        && gameObjects[i].getCentreY() > 250  )
-                        {
-                            gameObjects[i].setStatus(1);
-                            console.log("Trafienie")
-                        }
-                    //}
-                    //gameObjects[SHOT].resetShot()
                 }
             }
         }

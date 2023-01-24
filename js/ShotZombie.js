@@ -4,8 +4,51 @@ class ShotZombie extends GameObject
         super();
         this.shot=0;
     }
+    //Killing zombies
     setShot(){
-        this.shot=1;
+    for (let i = 4; i < numberofZombies+4; i++)
+    {  
+        if (gameObjects[PLAYER].getDirection() === UP)
+        {
+            if (gameObjects[i].getCentreX() < 300 
+            && gameObjects[i].getCentreX() > 200 
+            && gameObjects[i].getCentreY() < 240 
+            && gameObjects[i].getCentreY() > 100 )
+            {
+            gameObjects[i].setStatus(1);
+            } 
+        }
+        else if (gameObjects[PLAYER].getDirection() === LEFT)
+        {
+            if (gameObjects[i].getCentreX() < 240 
+            && gameObjects[i].getCentreX() > 100 
+            && gameObjects[i].getCentreY() < 300 
+            && gameObjects[i].getCentreY() > 200 )
+            {
+            gameObjects[i].setStatus(1);
+            } 
+        }
+        else if (gameObjects[PLAYER].getDirection() === RIGHT)
+        {
+            if (gameObjects[i].getCentreX() < 400 
+            && gameObjects[i].getCentreX() > 240 
+            && gameObjects[i].getCentreY() < 300 
+            && gameObjects[i].getCentreY() > 200 )
+            {
+            gameObjects[i].setStatus(1);
+            }
+        }
+        else if (gameObjects[PLAYER].getDirection() === DOWN)
+        {
+            if (gameObjects[i].getCentreX() < 300 
+            && gameObjects[i].getCentreX() > 200
+            && gameObjects[i].getCentreY() < 400 
+            && gameObjects[i].getCentreY() > 240  )
+            {
+            gameObjects[i].setStatus(1);
+            }
+        }
+    }
     }
     getShot()
     {
@@ -14,5 +57,9 @@ class ShotZombie extends GameObject
     resetShot()
     {
         this.shot=0;
+    }
+    updateState()
+    {
+        
     }
 }

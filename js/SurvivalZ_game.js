@@ -28,7 +28,7 @@ for (let i=0; i<collision.length; i += 70)
 {
   collisionMap.push(collision.slice(i, 70 + i));
 }
-console.log(collisionMap);
+//console.log(collisionMap);
 
 const UP = 0;
 const LEFT = 1;
@@ -41,7 +41,7 @@ const PLAYER = 1;
 const COLISION = 2;
 const SHOT = 3;
 
-let numberofZombies = 20;
+let numberofZombies = 50;
 
 function playGame()
 {
@@ -53,8 +53,13 @@ function playGame()
     gameObjects[SHOT] = new ShotZombie();
 
       for (let i = 4; i < numberofZombies+4; i++)
-      {  
-        gameObjects[i] = new Zombie(zombieImage, (Math.random() * 2000), (Math.random() * 2000), 0);      
+      { 
+        var x = Math.floor(Math.random()*3000) + 1000;
+        x *= Math.round(Math.random()) ? 1 : -1;
+        var y = Math.floor(Math.random()*2500) + 1000;
+        y *= Math.round(Math.random()) ? 1 : -1;
+        gameObjects[i] = new Zombie(zombieImage, x, y, 0); 
+        //console.log(i + " " +x + " " + y);     
         //gameObjects[i] = new Zombie(zombieImage, (Math.random() * 1000), (Math.random() * 1000), 0);
       }
   let game = new SurvivalZCanvasGame(collisionImage);
