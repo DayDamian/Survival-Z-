@@ -29,6 +29,8 @@ let saveButton = new Image();
 saveButton.src = "images/saveButton.png"
 let tableButton = new Image();
 tableButton.src = "images/tableButton.png"
+let exitButton = new Image();
+exitButton.src = "images/exitButton.png"
 
 let soundtruckZ = new Audio();
 soundtruckZ.src = "audio/SurvivalZ_Soundtrack.mp3";
@@ -52,12 +54,13 @@ const MAP = 0;
 const PLAYER = 1;
 const COLISION = 2;
 const SHOT = 3;
-const TABLE_BUTTON = 94;
-const SAVE_BUTTON = 95;
-const PLAY_BUTTON = 96;
-const START_MESSAGE = 97;
-const WIN_MESSAGE = 98;
-const LOST_MESSAGE = 99;
+const START_MESSAGE = 93;
+const WIN_MESSAGE = 94;
+const LOST_MESSAGE = 95;
+const EXIT_BUTTON = 96;
+const TABLE_BUTTON = 97;
+const SAVE_BUTTON = 98;
+const PLAY_BUTTON = 99;
 
 let numberofZombies = 50;
 
@@ -67,17 +70,48 @@ function playGame()
     soundtruckZ.play();
     gameObjects[START_MESSAGE] = new ScreenMessage(menuImage, 1);
     gameObjects[START_MESSAGE].start();
-    //gameObjects[PLAY_BUTTON] = new Button(playButton, 100, 200, 400, 200);
-    //gameObjects[TABLE_BUTTON] = new Button(tableButton,);
-    //gameObjects[TABLE_BUTTON].start();
+    gameObjects[PLAY_BUTTON] = new Button(playButton, 150, 200, 200, 100);
+    gameObjects[PLAY_BUTTON].start();
+    gameObjects[TABLE_BUTTON] = new Button(tableButton, 150, 350, 200, 100);
+    gameObjects[TABLE_BUTTON].start();
+
+    //let game = new SurvivalZCanvasGame();
+    let game = new SurvivalZCanvasGame();
+    game.start();
+
+    document.getElementById("gameCanvas").addEventListener("mousedown", function (e)
+    {
+        if (e.which === 1)  // left mouse button
+        {
+            let canvasBoundingRectangle = document.getElementById("gameCanvas").getBoundingClientRect();
+            let mouseX = e.clientX - canvasBoundingRectangle.left;
+            let mouseY = e.clientY - canvasBoundingRectangle.top;
+
+            if (gameObjects[PLAY_BUTTON].pointIsInsideBoundingRectangle(mouseX, mouseY))
+            {
+                gameObjects[START_MESSAGE].stopAndHide();
+                gameObjects[PLAY_BUTTON].stopAndHide();
+                gameObjects[TABLE_BUTTON].stopAndHide();
+                survival();
+
+            }
+            else if (gameObjects[TABLE_BUTTON].pointIsInsideBoundingRectangle(mouseX, mouseY))
+            {
+                
+            }
+        }
+    });
 }
 function survival()
 {
     //soundtruckZ.currentTime = 0;
     //soundtruckZ.play();
     gameObjects[MAP] = new static_image(map, 100, 100, 4480, 2560);
+    gameObjects[MAP].start();
     gameObjects[PLAYER] = new Player(playerImage, canvas.width / 2, canvas.height / 2);
+    gameObjects[PLAYER].start();
     gameObjects[COLISION] = new static_image(collisionImage, 100, 100, 4480, 2560);
+    gameObjects[COLISION].start();
     gameObjects[SHOT] = new ShotZombie();
 
       for (let i = 4; i < numberofZombies+4; i++)
@@ -87,15 +121,13 @@ function survival()
         var y = Math.floor(Math.random()*5500) + 1000;
         y *= Math.round(Math.random()) ? 1 : -1;
         gameObjects[i] = new Zombie(zombieImage, x, y, 0); 
+        gameObjects[i].start();
         //console.log(i + " " +x + " " + y);     
         //gameObjects[i] = new Zombie(zombieImage, (Math.random() * 1000), (Math.random() * 1000), 0);
       }
-  let game = new SurvivalZCanvasGame(collisionImage);
 
-  //let game = new CanvasGame();
-
-  /* Always play the game */
-  game.start();
+      gameObjects[93] = new Move();
+      gameObjects[93].start();
 
   document.addEventListener("keydown", function (e)
     {
@@ -146,4 +178,27 @@ function survival()
             shotgun.play();
         }
     });
+    
 }
+function test(){
+    console.log("Test")
+    test()
+}
+
+function resetGame()
+{
+    gameObjects[MAP].stopAndHide();
+    gameObjects[PLAYER].stopAndHide();
+    gameObjects[COLISION].stopAndHide();
+                    
+    for (let i = 4; i < numberofZombies+4; i++)
+        {
+        gameObjects[i].stopAndHide();
+        }
+
+    gameObjects[LOST_MESSAGE].stopAndHide();
+    gameObjects[WIN_MESSAGE].stopAndHide();
+    gameObjects[EXIT_BUTTON].stopAndHide();
+    survival();
+}
+

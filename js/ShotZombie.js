@@ -3,6 +3,7 @@ class ShotZombie extends GameObject
     constructor(){
         super();
         this.shot=0;
+        this.killed = 0;
     }
     //Killing zombies
     setShot(){
@@ -16,6 +17,7 @@ class ShotZombie extends GameObject
             && gameObjects[i].getCentreY() > 100 )
             {
             gameObjects[i].setStatus(1);
+            this.killed++;
             } 
         }
         else if (gameObjects[PLAYER].getDirection() === LEFT)
@@ -26,6 +28,7 @@ class ShotZombie extends GameObject
             && gameObjects[i].getCentreY() > 200 )
             {
             gameObjects[i].setStatus(1);
+            this.killed++;
             } 
         }
         else if (gameObjects[PLAYER].getDirection() === RIGHT)
@@ -36,6 +39,7 @@ class ShotZombie extends GameObject
             && gameObjects[i].getCentreY() > 200 )
             {
             gameObjects[i].setStatus(1);
+            this.killed++;
             }
         }
         else if (gameObjects[PLAYER].getDirection() === DOWN)
@@ -46,6 +50,7 @@ class ShotZombie extends GameObject
             && gameObjects[i].getCentreY() > 240  )
             {
             gameObjects[i].setStatus(1);
+            this.killed++;
             }
         }
     }
@@ -61,5 +66,9 @@ class ShotZombie extends GameObject
     updateState()
     {
         
+    }
+    getKilled()
+    {
+        return this.killed;
     }
 }

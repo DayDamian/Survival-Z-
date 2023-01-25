@@ -9,11 +9,15 @@ class ScreenMessage extends GameObject
         this.y = 0;
         this.width = canvas.width;
         this.height = canvas.height;
-        console.log("died")
     }
 
     render()
     {
-        ctx.drawImage(this.image, 0, 0, 500, 500);
+        ctx.drawImage(this.image, 0, 0, canvas.width, canvas.height);
+    }
+    setStatus()
+    {
+        this.x = 1000;
+        this.y = 1000;
     }
 }
