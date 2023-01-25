@@ -70,6 +70,12 @@ class SurvivalZCanvasGame extends CanvasGame
                         gameObjects[i].setCentreX(1);
                     }
                 }
+                else if (gameObjects[i].getCentreX() === 250)
+                {
+                    var cool = Math.floor(Math.random()*10);
+                    cool *= Math.round(Math.random()) ? 1 : -1;
+                    gameObjects[i].setCentreX(cool);
+                }
 
                 if (gameObjects[i].getCentreY() < 250)
                 {
@@ -91,17 +97,31 @@ class SurvivalZCanvasGame extends CanvasGame
                         gameObjects[i].setCentreY(1);
                     }
                 }
+                else if (gameObjects[i].getCentreY() === 250)
+                {
+                    var cool = Math.floor(Math.random()*10);
+                    cool *= Math.round(Math.random()) ? 1 : -1;
+                    gameObjects[i].setCentreY(cool);
+                }
 
 
                 //Player die 
-                if (gameObjects[i].getCentreX() <= 270 && gameObjects[i].getCentreX() >= 220 )
+                if (gameObjects[i].getCentreX() <= 270 
+                && gameObjects[i].getCentreX() >= 220 
+                && gameObjects[i].getCentreY() <= 270 
+                && gameObjects[i].getCentreY() >= 220)
                 {
-                    if (gameObjects[i].getCentreY() <= 270 && gameObjects[i].getCentreY() >= 220 )
-                    {
                         gameObjects[i].setStop();
                         gameObjects[i].setStatus(1);
-                        //console.log("Zjedzony")
-                    }
+                        gameObjects[LOST_MESSAGE] = new ScreenMessage(diedImage, 1);
+                        gameObjects[LOST_MESSAGE].start();
+                        gameObjects[MAP].stopAndHide();
+                        gameObjects[PLAYER].stopAndHide();
+                        gameObjects[COLISION].stopAndHide();
+                        for (let i = 4; i < numberofZombies+4; i++)
+                        {
+                            gameObjects[i].stopAndHide();
+                        }
                 }
             }
         }

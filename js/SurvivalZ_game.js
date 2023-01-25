@@ -17,6 +17,18 @@ let collisionImage = new Image();
 collisionImage.src = "images/colision.png"
 let zombieImage = new Image();
 zombieImage.src = "images/zombie.png";
+let winImage = new Image();
+winImage.src = "images/WIN.png"
+let diedImage = new Image();
+diedImage.src = "images/DIED.png"
+let menuImage = new Image();
+menuImage.src = "images/MENU.png"
+let playButton = new Image();
+playButton.src = "images/playButton.png"
+let saveButton = new Image();
+saveButton.src = "images/saveButton.png"
+let tableButton = new Image();
+tableButton.src = "images/tableButton.png"
 
 let soundtruckZ = new Audio();
 soundtruckZ.src = "audio/SurvivalZ_Soundtrack.mp3";
@@ -40,6 +52,12 @@ const MAP = 0;
 const PLAYER = 1;
 const COLISION = 2;
 const SHOT = 3;
+const TABLE_BUTTON = 94;
+const SAVE_BUTTON = 95;
+const PLAY_BUTTON = 96;
+const START_MESSAGE = 97;
+const WIN_MESSAGE = 98;
+const LOST_MESSAGE = 99;
 
 let numberofZombies = 50;
 
@@ -47,6 +65,16 @@ function playGame()
 {
     soundtruckZ.currentTime = 0;
     soundtruckZ.play();
+    gameObjects[START_MESSAGE] = new ScreenMessage(menuImage, 1);
+    gameObjects[START_MESSAGE].start();
+    //gameObjects[PLAY_BUTTON] = new Button(playButton, 100, 200, 400, 200);
+    //gameObjects[TABLE_BUTTON] = new Button(tableButton,);
+    //gameObjects[TABLE_BUTTON].start();
+}
+function survival()
+{
+    //soundtruckZ.currentTime = 0;
+    //soundtruckZ.play();
     gameObjects[MAP] = new static_image(map, 100, 100, 4480, 2560);
     gameObjects[PLAYER] = new Player(playerImage, canvas.width / 2, canvas.height / 2);
     gameObjects[COLISION] = new static_image(collisionImage, 100, 100, 4480, 2560);
@@ -54,9 +82,9 @@ function playGame()
 
       for (let i = 4; i < numberofZombies+4; i++)
       { 
-        var x = Math.floor(Math.random()*3000) + 1000;
+        var x = Math.floor(Math.random()*6000) + 1000;
         x *= Math.round(Math.random()) ? 1 : -1;
-        var y = Math.floor(Math.random()*2500) + 1000;
+        var y = Math.floor(Math.random()*5500) + 1000;
         y *= Math.round(Math.random()) ? 1 : -1;
         gameObjects[i] = new Zombie(zombieImage, x, y, 0); 
         //console.log(i + " " +x + " " + y);     
@@ -118,5 +146,4 @@ function playGame()
             shotgun.play();
         }
     });
-
 }
