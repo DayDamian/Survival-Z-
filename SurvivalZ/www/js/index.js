@@ -14,7 +14,7 @@
 /* Always create a canvas and a ctx */
 let canvas = null;
 let ctx = null;
-
+let firestoreService;
 /* Always create an array that holds the default game gameObjects */
 let gameObjects = [];
 

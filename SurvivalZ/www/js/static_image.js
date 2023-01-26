@@ -36,22 +36,22 @@ class static_image extends GameObject {
         }
         
         if 
-        (this.x >= 250)
+        (this.x >= 200)
         {
             this.x = -4228;
         }
         if 
-        (this.y >= 250)
+        (this.y >= 200)
         {
           this.y = -2308;
         }
         if (this.x <= (-4229))
         {
-            this.x = 249;
+            this.x = 200;
         }
         if (this.y <= (-2309))
         {
-            this.y = 249;
+            this.y = 200;
         }
         
 

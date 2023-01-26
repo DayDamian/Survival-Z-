@@ -11,9 +11,9 @@ class ShotZombie extends GameObject
     {  
         if (gameObjects[PLAYER].getDirection() === UP)
         {
-            if (gameObjects[i].getCentreX() < 300 
-            && gameObjects[i].getCentreX() > 200 
-            && gameObjects[i].getCentreY() < 240 
+            if (gameObjects[i].getCentreX() < 220 
+            && gameObjects[i].getCentreX() > 180 
+            && gameObjects[i].getCentreY() < 180 
             && gameObjects[i].getCentreY() > 100 )
             {
             gameObjects[i].setStatus(1);
@@ -22,10 +22,10 @@ class ShotZombie extends GameObject
         }
         else if (gameObjects[PLAYER].getDirection() === LEFT)
         {
-            if (gameObjects[i].getCentreX() < 240 
+            if (gameObjects[i].getCentreX() < 180 
             && gameObjects[i].getCentreX() > 100 
-            && gameObjects[i].getCentreY() < 300 
-            && gameObjects[i].getCentreY() > 200 )
+            && gameObjects[i].getCentreY() < 220 
+            && gameObjects[i].getCentreY() > 180 )
             {
             gameObjects[i].setStatus(1);
             this.killed++;
@@ -33,10 +33,10 @@ class ShotZombie extends GameObject
         }
         else if (gameObjects[PLAYER].getDirection() === RIGHT)
         {
-            if (gameObjects[i].getCentreX() < 400 
-            && gameObjects[i].getCentreX() > 240 
-            && gameObjects[i].getCentreY() < 300 
-            && gameObjects[i].getCentreY() > 200 )
+            if (gameObjects[i].getCentreX() < 300 
+            && gameObjects[i].getCentreX() > 220 
+            && gameObjects[i].getCentreY() < 220 
+            && gameObjects[i].getCentreY() > 180 )
             {
             gameObjects[i].setStatus(1);
             this.killed++;
@@ -44,10 +44,10 @@ class ShotZombie extends GameObject
         }
         else if (gameObjects[PLAYER].getDirection() === DOWN)
         {
-            if (gameObjects[i].getCentreX() < 300 
-            && gameObjects[i].getCentreX() > 200
-            && gameObjects[i].getCentreY() < 400 
-            && gameObjects[i].getCentreY() > 240  )
+            if (gameObjects[i].getCentreX() < 220 
+            && gameObjects[i].getCentreX() > 180
+            && gameObjects[i].getCentreY() < 300 
+            && gameObjects[i].getCentreY() > 180  )
             {
             gameObjects[i].setStatus(1);
             this.killed++;
@@ -62,6 +62,10 @@ class ShotZombie extends GameObject
     resetShot()
     {
         this.shot=0;
+    }
+    resetKilled()
+    {
+        this.killed = 0;
     }
     updateState()
     {

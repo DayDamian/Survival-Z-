@@ -62,7 +62,11 @@ const TABLE_BUTTON = 97;
 const SAVE_BUTTON = 98;
 const PLAY_BUTTON = 99;
 
-let numberofZombies = 50;
+let numberofZombies = 30;
+
+let i = 0;
+let startX;
+let startY;
 
 function playGame()
 {
@@ -70,12 +74,11 @@ function playGame()
     soundtruckZ.play();
     gameObjects[START_MESSAGE] = new ScreenMessage(menuImage, 1);
     gameObjects[START_MESSAGE].start();
-    gameObjects[PLAY_BUTTON] = new Button(playButton, 150, 200, 200, 100);
+    gameObjects[PLAY_BUTTON] = new Button(playButton, 100, 180, 200, 100);
     gameObjects[PLAY_BUTTON].start();
-    gameObjects[TABLE_BUTTON] = new Button(tableButton, 150, 350, 200, 100);
+    gameObjects[TABLE_BUTTON] = new Button(tableButton, 100, 280, 200, 100);
     gameObjects[TABLE_BUTTON].start();
 
-    //let game = new SurvivalZCanvasGame();
     let game = new SurvivalZCanvasGame();
     game.start();
 
@@ -97,15 +100,21 @@ function playGame()
             }
             else if (gameObjects[TABLE_BUTTON].pointIsInsideBoundingRectangle(mouseX, mouseY))
             {
-                
+                firestoreService.fetchScores()
+                .then(elements => {
+                    alert(
+                        elements.sort((a, b) => a.score > b.score ? -1 : 1)
+                            .slice(0, 9)
+                            .map((entry, index) => `${index + 1} Name: ${entry.name} Score: ${entry.score} \n`)
+                    )})
             }
         }
     });
 }
 function survival()
 {
-    //soundtruckZ.currentTime = 0;
-    //soundtruckZ.play();
+    window.addEventListener("deviceorientation", this.handleOrientation);
+
     gameObjects[MAP] = new static_image(map, 100, 100, 4480, 2560);
     gameObjects[MAP].start();
     gameObjects[PLAYER] = new Player(playerImage, canvas.width / 2, canvas.height / 2);
@@ -116,9 +125,9 @@ function survival()
 
       for (let i = 4; i < numberofZombies+4; i++)
       { 
-        var x = Math.floor(Math.random()*6000) + 1000;
+        var x = Math.floor(Math.random()*6000) + 600;
         x *= Math.round(Math.random()) ? 1 : -1;
-        var y = Math.floor(Math.random()*5500) + 1000;
+        var y = Math.floor(Math.random()*5500) + 600;
         y *= Math.round(Math.random()) ? 1 : -1;
         gameObjects[i] = new Zombie(zombieImage, x, y, 0); 
         gameObjects[i].start();
@@ -178,6 +187,15 @@ function survival()
             shotgun.play();
         }
     });
+    document.getElementById("gameCanvas").addEventListener("mousedown", function (e)
+    {
+        if (e.which === 1)  // left mouse button
+        {
+            gameObjects[SHOT].setShot();
+            shotgun.currentTime = 0;
+            shotgun.play();
+        }
+    });
     
 }
 function test(){
@@ -196,9 +214,108 @@ function resetGame()
         gameObjects[i].stopAndHide();
         }
 
+    gameObjects[SAVE_BUTTON].stopAndHide();
     gameObjects[LOST_MESSAGE].stopAndHide();
     gameObjects[WIN_MESSAGE].stopAndHide();
     gameObjects[EXIT_BUTTON].stopAndHide();
-    survival();
+    gameObjects[102].stopAndHide();
+
+    gameObjects[START_MESSAGE] = new ScreenMessage(menuImage, 1);
+    gameObjects[START_MESSAGE].start();
+    gameObjects[PLAY_BUTTON].start();
+    gameObjects[TABLE_BUTTON].start();
+
+    document.getElementById("gameCanvas").addEventListener("mousedown", function (e)
+    {
+        if (e.which === 1)  // left mouse button
+        {
+            let canvasBoundingRectangle = document.getElementById("gameCanvas").getBoundingClientRect();
+            let mouseX = e.clientX - canvasBoundingRectangle.left;
+            let mouseY = e.clientY - canvasBoundingRectangle.top;
+
+            if (gameObjects[PLAY_BUTTON].pointIsInsideBoundingRectangle(mouseX, mouseY))
+            {
+                gameObjects[START_MESSAGE].stopAndHide();
+                gameObjects[PLAY_BUTTON].stopAndHide();
+                gameObjects[TABLE_BUTTON].stopAndHide();
+                survival();
+
+            }
+            else if (gameObjects[TABLE_BUTTON].pointIsInsideBoundingRectangle(mouseX, mouseY))
+            {
+                firestoreService.fetchScores()
+                .then(elements => {
+                    alert(
+                        elements.sort((a, b) => a.score > b.score ? -1 : 1)
+                            .slice(0, 9)
+                            .map((entry, index) => `${index + 1} Name: ${entry.name} Score: ${entry.score} \n`)
+                    )})
+            }
+        }
+    });
+}
+function resetGame2()
+{
+    gameObjects[START_MESSAGE] = new ScreenMessage(menuImage, 1);
+    gameObjects[START_MESSAGE].start();
+    gameObjects[PLAY_BUTTON].start();
+    gameObjects[TABLE_BUTTON].start();
+
+    document.getElementById("gameCanvas").addEventListener("mousedown", function (e)
+    {
+        if (e.which === 1)  // left mouse button
+        {
+            let canvasBoundingRectangle = document.getElementById("gameCanvas").getBoundingClientRect();
+            let mouseX = e.clientX - canvasBoundingRectangle.left;
+            let mouseY = e.clientY - canvasBoundingRectangle.top;
+
+            if (gameObjects[PLAY_BUTTON].pointIsInsideBoundingRectangle(mouseX, mouseY))
+            {
+                gameObjects[START_MESSAGE].stopAndHide();
+                gameObjects[PLAY_BUTTON].stopAndHide();
+                gameObjects[TABLE_BUTTON].stopAndHide();
+                survival();
+
+            }
+            else if (gameObjects[TABLE_BUTTON].pointIsInsideBoundingRectangle(mouseX, mouseY))
+            {
+                firestoreService.fetchScores()
+                .then(elements => {
+                    alert(
+                        elements.sort((a, b) => a.score > b.score ? -1 : 1)
+                            .slice(0, 9)
+                            .map((entry, index) => `${index + 1} Name: ${entry.name} Score: ${entry.score} \n`)
+                    )})
+            }
+        }
+    });
+}
+
+function handleOrientation(event){
+    if(i === 0){
+        startX = event.gamma;
+        startY = event.beta;
+        i++
+    }
+    //console.log(event.gamma + " " + event.beta);
+    if (event.gamma>startX+10.0){
+        gameObjects[MAP].setDirection(LEFT);
+        gameObjects[COLISION].setDirection(LEFT);
+        gameObjects[PLAYER].setDirection(RIGHT);
+    }else if (event.gamma<startX-10.0){
+        gameObjects[MAP].setDirection(RIGHT);
+        gameObjects[COLISION].setDirection(RIGHT);
+        gameObjects[PLAYER].setDirection(LEFT);
+    }
+    else if (event.beta>startY +10.0){
+        gameObjects[MAP].setDirection(UP);
+        gameObjects[COLISION].setDirection(UP);
+        gameObjects[PLAYER].setDirection(DOWN);
+    }
+    else if(event.beta<startY-10.0){
+        gameObjects[MAP].setDirection(DOWN);
+        gameObjects[COLISION].setDirection(DOWN);
+        gameObjects[PLAYER].setDirection(UP);
+    }
 }
 

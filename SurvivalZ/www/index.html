@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Survival Z game</title>
+        <link rel="shortcut icon" type="image/png" href="images/SurvivalZ_icon.png"/>
+
+        <!-- Always include the game stylesheet, the Game class, the GameObject class and index.js -->
+        <!-- These four must be included in all games. This code never changes.                -->
+        <link href="css/game.css" rel="stylesheet" type="text/css"/>       
+        <script src="js/CanvasGame.js" type="text/javascript"></script>
+        <script src="js/GameObject.js" type="text/javascript"></script>
+        <script src="js/index.js" type="text/javascript"></script>
+
+        <!-- Firebase library -->
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+        <!-- Include any classes that extend from GameObject that are used in this game -->
+        <script src="data/collision.js" type="text/javascript"></script>
+        <script src="js/SurvivalZCanvasGame.js" type="text/javascript"></script>
+        <script src="js/SurvivalZ_game.js" type="text/javascript"></script>
+        <script src="js/static_image.js" type="text/javascript"></script>
+        <script src="js/Player.js" type="text/javascript"></script>
+        <script src="js/Zombie.js" type="text/javascript"></script>
+        <script src="js/ShotZombie.js" type="text/javascript"></script>
+        <script src="js/ScreenMessage.js" type="text/javascript"></script>
+        <script src="js/Button.js" type="text/javascript"></script>
+        <script src="js/Move.js" type="text/javascript"></script>
+        <script src="js/StaticText.js" type="text/javascript"></script>
+        <script src="js/FirestoreService.js" type="text/javascript"></script>
+    </head>
+
+    <body>
+        <img src="images/top.png" alt="Survival Z">
+        <div id="gameContainer">
+            <canvas id="gameCanvas" tabindex="1"></canvas>       
+        </div>
+        <img src="images/bottom.png" alt="Survival Z">
+
+        <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-analytics.js";
+        import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCIKS1xHZuv4I3AJs0dfOJiQ9_vIuAtDJk",
+            authDomain: "survivalzfirebase.firebaseapp.com",
+            databaseURL: "https://survivalzfirebase-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "survivalzfirebase",
+            storageBucket: "survivalzfirebase.appspot.com",
+            messagingSenderId: "221492068187",
+            appId: "1:221492068187:web:0c92661dda6dbecb7be47e"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        firestoreService = new FirestoreService(getFirestore(), collection, addDoc, getDocs);
+      </script>    
+    </body>
+</html>

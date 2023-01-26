@@ -14,8 +14,8 @@ body{
 {
     /* the canvas styling usually does not change */
     outline:1px solid darkgrey;
-    width:500px;
-    height:500px;
+    width: 400px;
+    height: 400px;
 }
 
 #loadingMessage
